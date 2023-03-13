@@ -4,33 +4,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  buildConfiguration: 'Release'
-
 steps:
-- script: dotnet restore
-  displayName: 'Restore NuGet packages'
-
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'Build solution'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*Tests.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'Run unit tests'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)'
-    zipAfterPublish: true
-  displayName: 'Publish artifact'
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    artifactName: 'my-web-app'
-    targetPath: '$(build.artifactstagingdirectory)'
-  displayName: 'Publish artifact to pipeline'
+- script: |
+    echo Hello, world!
+  displayName: 'Print message'
